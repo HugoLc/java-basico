@@ -14,17 +14,69 @@ import java.text.DecimalFormat;
 public class Exercicios {
     public static void main(String[] args) {
         
-        ArrayList<Temperatura> listaDeTemperatura = new ArrayList<>();
-        // List<Temperatura> temperaturas = new ArrayList<>(){{
-        //     add(new Temperatura("Janeiro", 30.2));
-        //     add(new Temperatura("Fevereito", 29.0));
-        //     add(new Temperatura("Março", 28.5));
-        //     add(new Temperatura("Abril", 28.0));
-        //     add(new Temperatura("Maio", 27.7));
-        //     add(new Temperatura("Junho", 25.0));
-        // }};
         Scanner scanner = new Scanner(System.in);
-    
+        boolean sair = false;
+        
+        while(!sair){
+
+            System.out.println("\n\n############################");
+            System.out.println("Qual exercício deseja acessar?");
+            System.out.println("1 - Temperatura semestral");
+            System.out.println("2 - Interrogatório");
+            System.out.println("0 - Sair");
+            System.out.println("############################\n\n");
+
+            int escolhaExercicio = scanner.nextInt();
+
+            switch (escolhaExercicio) {
+                case 1:
+                    exercicioTemperatura(scanner);
+                    break;
+                case 2:
+                    exercicioInterrogatorio(scanner);
+                    break;
+                case 0:
+                    sair = true;
+                    break;
+            
+                default:
+                    System.out.println("Escolha o número de um exercício existente");
+                    break;
+            }
+        }   
+        
+        scanner.close();
+    }
+
+    private static void exercicioInterrogatorio(Scanner scanner) {
+        Interrogatorio  interrogatorio = new Interrogatorio();
+
+        System.out.println("Ocorreu um crime! Responda as perguntas com S para Sim e N para Não");
+        
+
+        for (String pergunta : interrogatorio.getPerguntas()) {
+            Boolean respostaValida = false;
+            while(!respostaValida){
+                System.out.println(pergunta);
+                String resposta = scanner.next();
+                if (resposta.equalsIgnoreCase("s")) {
+                    interrogatorio.setRespostas(true);
+                    respostaValida = true;
+                } else if(resposta.equalsIgnoreCase("n")){
+                    interrogatorio.setRespostas(false);
+                    respostaValida = true;
+                } else {
+                    System.out.println("Responda corretamente! S para Sim e N para Não");
+                }
+            }
+        }
+
+        System.out.println(">>>>>>>>>>> Você foi considerado " + interrogatorio.julgar() + "! <<<<<<<<<<<");
+    }
+
+    private static void exercicioTemperatura(Scanner scanner) {
+        
+        ArrayList<Temperatura> listaDeTemperatura = new ArrayList<>();
     
         System.out.println("Temperatura de Janeiro");
         listaDeTemperatura.add(new Temperatura("Janeiro",scanner.nextDouble()));
@@ -44,13 +96,12 @@ public class Exercicios {
         System.out.println("Temperatura de Junho");
         listaDeTemperatura.add(new Temperatura("Junho",scanner.nextDouble()));
         
-        scanner.close();
-            double mediaSemestral = media(listaDeTemperatura);
-
-       System.out.println("--------------------------------------");
-       DecimalFormat decimalFormat = new DecimalFormat("#.#");
-       System.out.println("A média no semestre foi: " +  decimalFormat.format(mediaSemestral)+ "º");
-
+        double mediaSemestral = media(listaDeTemperatura);
+        
+        System.out.println("--------------------------------------");
+        DecimalFormat decimalFormat = new DecimalFormat("#.#");
+        System.out.println("A média no semestre foi: " +  decimalFormat.format(mediaSemestral)+ "º");
+        
         System.out.println("Os meses que ficaram acima da média: ");
         mostrarMaioresQueAMedia(listaDeTemperatura, mediaSemestral);
         
