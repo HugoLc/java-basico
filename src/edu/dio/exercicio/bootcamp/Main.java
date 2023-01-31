@@ -5,6 +5,8 @@ public class Main {
         Curso curso = new Curso();
         Mentoria mentoria = new Mentoria();
 
+        Conteudo conteudo = new Curso();
+
         System.out.println(curso);
         System.out.println(mentoria);
     }
